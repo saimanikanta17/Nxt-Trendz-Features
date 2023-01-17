@@ -1,0 +1,25 @@
+.cart-summary-card {
+  align-self: flex-end;
+  font-family: 'Roboto';
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+.total {
+  color: #616e7c;
+  font-size: 26px;
+}
+.amount {
+  color: #000000;
+}
+.no-of-items {
+  color: #616e7c;
+  font-size: 14px;
+}
+.check-out-btn {
+  width: 200px;
+  height: 35px;
+  background-color: #0b69ff;
+  border-style: none;
+  color: #ffffff;
+  border-radius: 10px;
+}

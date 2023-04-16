@@ -22,15 +22,17 @@ class App extends Component {
   addCartItem = product => {
     const {cartList} = this.state
     const productAdded = cartList.find(each => each.id === product.id)
-    const filteredCart = cartList.filter(each => each.id !== product.id)
     if (productAdded === undefined) {
       this.setState(prevState => ({cartList: [...prevState.cartList, product]}))
     } else {
-      let {quantity} = productAdded
-      quantity += 1
-      const addedProduct = {...product, quantity}
+      let {quantity} = product
+      quantity += productAdded.quantity
+      const addedProduct = {...productAdded, quantity}
+      const index = cartList.indexOf(productAdded)
+      const cartItems = cartList
+      cartItems.splice(index, 1, addedProduct)
       this.setState({
-        cartList: [...filteredCart, addedProduct],
+        cartList: cartItems,
       })
     }
   }
@@ -50,27 +52,32 @@ class App extends Component {
   incrementCartItemQuantity = id => {
     const {cartList} = this.state
     const productIncrement = cartList.find(each => each.id === id)
-    const filteredCart = cartList.filter(each => each.id !== id)
+    const index = cartList.indexOf(productIncrement)
+    const cartItems = cartList
     let {quantity} = productIncrement
     quantity += 1
     const addedProduct = {...productIncrement, quantity}
+    cartItems.splice(index, 1, addedProduct)
     this.setState({
-      cartList: [...filteredCart, addedProduct],
+      cartList: cartItems,
     })
   }
 
   decrementCartItemQuantity = id => {
     const {cartList} = this.state
     const productDecrement = cartList.find(each => each.id === id)
-    const filteredCart = cartList.filter(each => each.id !== id)
+    const index = cartList.indexOf(productDecrement)
+    const cartItems = cartList
     let {quantity} = productDecrement
     if (quantity > 1) {
       quantity -= 1
-      const addedProduct = {...productDecrement, quantity}
+      const product = {...productDecrement, quantity}
+      cartItems.splice(index, 1, product)
       this.setState({
-        cartList: [...filteredCart, addedProduct],
+        cartList: cartItems,
       })
     } else {
+      const filteredCart = cartList.filter(each => each.id !== id)
       this.setState({
         cartList: [...filteredCart],
       })
